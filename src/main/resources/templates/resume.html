@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1"/>
+<title>Insert title here</title>
+</head>
+<body>
+	<p th:text="${person.firstName}"/>
+	<p th:text="${person.lastName}"/>
+	<p th:text="${person.email}"/> 
+	<div th:each="education: ${person.eduList}">
+			<p th:text="${education.typeOfDegree}"></p>
+			<p th:text="${education.institute}"></p>
+		<p th:text="${education.year}"></p>
+	</div>	
+</body>
+</html>

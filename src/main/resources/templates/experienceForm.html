@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1"/>
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<form  action ="#"  th:action="@{/experience/save}" th:object="${experience}" method = "post">
+			<p> Title: 
+				<input type="text"  th:field="*{title}" /> 
+				<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+			</p>
+			<p> Company:
+				 <input type="text" th:field="*{company}"  /> 
+			 	<span th:if="${#fields.hasErrors('company')}" th:errors="*{company}"></span>
+			</p>
+			<p> Start date: 
+				<input type="text" th:field ="*{startDate}" /> 
+				<span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></span>
+			</p>
+			<p> End date: 
+				<input type="text" th:field ="*{endDate}" /> 
+				<span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></span>
+			</p>
+			<p> Duty: 
+				<input type="text" th:field ="*{duties}" /> 
+				<span th:if="${#fields.hasErrors('duties')}" th:errors="*{duties}"></span>
+			</p>
+			<input name ="personId" th:value="${personId}"  /> 
+			<input type="submit" value="submit"  />
+		
+		</form>
+	</body>
+</html>

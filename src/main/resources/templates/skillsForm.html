@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="ISO-8859-1"/>
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<form  action ="#"  th:action="@{/skill/save}" th:object="${skill}" method = "post">
+			<p> Skill: 
+				<input type="text"  th:field="*{skill}" /> 
+				<span th:if="${#fields.hasErrors('skill')}" th:errors="*{skill}"></span>
+			</p>
+			<p> Proficiency:
+				 <input type="text" th:field="*{proficiency}"  /> 
+			 	 <span th:if="${#fields.hasErrors('proficiency')}" th:errors="*{proficiency}"></span>
+			</p>
+			<input name ="personId" th:value="${personId}"  /> 
+			<input type="submit" value="submit"  />
+		</form>
+	</body>
+</html>
