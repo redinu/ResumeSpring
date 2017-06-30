@@ -1,1 +1,4 @@
-CREATE SCHEMA `resumeapp` ;
+CREATE SCHEMA `redietAyalewResume` ;
+use redietAyalewResume;
+insert into user (enabled,password,username,first_name,last_name) values(1,'password','user','Rediet','Ayalew');
+insert into role(role) value('job seeker');

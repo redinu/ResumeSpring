@@ -28,9 +28,11 @@
 				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
 				</div>
 				<div> Role: 
-				<input type="radio" name="role" th:field ="*{role}" value="Job Seeker">Job Seeker</input> 
-				<input type="radio" name="role" th:field ="*{role}" value="Recruiter">Recruiter</input> 
-				<span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+				<select th:field ="*{roles}" >
+					<option  value="Job Seeker">Job Seeker</option>
+					<option  value="Recruiter">Recruiter</option>
+				</select>
+				
 				</div>
 				<div><input type="submit" value="Register"/></div>
 			</form>

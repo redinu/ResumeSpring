@@ -1,9 +1,17 @@
 package com.resume.model;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
+
 
 @Entity
 public class User {
@@ -20,8 +28,12 @@ public class User {
 	private String password;
 	@NotNull
 	private String username;
-	@NotNull
-	private String role;
+
+	private boolean enabled;
+	
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(joinColumns = @JoinColumn( name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
 	
 	public long getUserId() {
 		return userId;
@@ -63,14 +75,24 @@ public class User {
 		this.username = username;
 	}
 
-	public String getRole() {
-		return role;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
 	
+		
 	
 
 }

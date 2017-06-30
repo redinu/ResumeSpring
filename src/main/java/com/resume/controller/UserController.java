@@ -2,7 +2,9 @@ package com.resume.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -12,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.resume.model.Role;
 import com.resume.model.Education;
 import com.resume.model.Experience;
 import com.resume.model.Person;
@@ -24,6 +28,7 @@ import com.resume.model.User;
 import com.resume.repositories.EducationRepository;
 import com.resume.repositories.ExperienceRepository;
 import com.resume.repositories.PersonRepository;
+import com.resume.repositories.RoleRepository;
 import com.resume.repositories.SkillsRepository;
 import com.resume.repositories.UserRepository;
 
@@ -32,6 +37,9 @@ public class UserController {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	RoleRepository roleRepository;
 	
 	@Autowired
 	PersonRepository personRepository;
@@ -57,41 +65,39 @@ public class UserController {
 	    return "register";
 	}
 	
-	@RequestMapping( path = "/register", method=RequestMethod.POST)
+	@RequestMapping(path = "/register", method=RequestMethod.POST)
 	public String register(@Valid User user, BindingResult bindingResult,Model model){
+		
+		Role role = new Role();
+		Set<Role> roles = user.getRoles();
+		Set<User> users = new HashSet<User>();
+		
 		if(bindingResult.hasErrors()){
 			return "register";
 		}
+		
 		if(!userRepository.existsByUsername(user.getUsername())){
+		
+			user.setEnabled(true);
+			users.add(user);
+			
+			for(Role r: roles){
+				role.setRole(r.getRole());
+			}
+		
+			role.setUsers(users);
+			roleRepository.save(role);
 			userRepository.save(user);
+		
 			return "redirect:/login";
 		}else{
 			model.addAttribute("errormessage", "Someone's already using that email. If that’s you, please sign in.");
 			return "register";
 		}
 	}
-	@RequestMapping( path = "/login", method=RequestMethod.POST)
-	public String checklogin(@ModelAttribute User user, Model model){
-		
-		if(userRepository.existsByUsername(user.getUsername())){
-			User u = userRepository.findUserByUsername(user.getUsername());
-			if(user.getUsername().equals(u.getUsername()) && user.getPassword().equals(u.getPassword())){
-				return "redierct:/";
-			}else if(!user.getUsername().equals(u.getUsername()) || !user.getPassword().equals(u.getPassword())){
-				model.addAttribute("errormessage", "Incorrect username and password");
-				
-				return "login";
-			}
-			
-		}else{
-			model.addAttribute("errormessage", "UserName doesn't exist. Do you want to register?");
-			return "register";
-		}
-		return null;
-		
-	}
+
 	
-	@RequestMapping(value = "/friends/search", params = "s")
+	@RequestMapping(value = "/search/users", params = "s")
 	public String searchFriends(@RequestParam("s") String s, Principal principal, Model model) {
 		Person p = new Person();
 		List<Person> personList = personRepository.findPersonByFirstName(principal.getName());
@@ -123,7 +129,7 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value = "/search/education", params = "s")
+	@RequestMapping(value = "/search?action=school", params = "s")
 	public String searchSchools(@RequestParam("s") String s, Principal principal, Model model) {
 		
 		
@@ -136,7 +142,7 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value = "/search/education", params = "s")
+	@RequestMapping(value = "/search?action=skill", params = "s")
 	public String searchSkill(@RequestParam("s") String s, Principal principal, Model model) {
 		
 		
