@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head th:replace="base :: head">
+		<meta charset="ISO-8859-1"/>
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<nav th:replace=" base :: nav"></nav>
+		<div class="container">
+			<div>
+			<p th:if="${errormessage!=null}" th:text="${errormessage}"></p> 
+			</div>	
+			<form th:action="@{/register}" th:object="${user}" method="post">
+				<div>
+				First Name: <input type="text" th:field="*{firstName}"/>
+				<span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+				</div>
+				<div>
+				Last Name: <input type="text" th:field="*{lastName}"/> 
+				 <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+				</div>
+				<div> Email: 
+				<input type="text" th:field ="*{username}" /> 
+				<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+				</div>
+				<div> Password: 
+				<input type="text" th:field ="*{password}" /> 
+				<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+				</div>
+				<div> Role: 
+				<input type="radio" name="role" th:field ="*{role}" value="Job Seeker">Job Seeker</input> 
+				<input type="radio" name="role" th:field ="*{role}" value="Recruiter">Recruiter</input> 
+				<span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+				</div>
+				<div><input type="submit" value="Register"/></div>
+			</form>
+		</div>
+	</body>
+</html>

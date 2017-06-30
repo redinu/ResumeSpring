@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="ISO-8859-1"/>
+	<title>Insert title here</title>
+	</head>
+	<body>
+		<ul th:each="exp : ${allExp}">
+			<li th:text="${exp.personId}"></li>
+		</ul>
+		<ul th:each="per : ${allPer}">
+			<a th:ref = "@{/resume/{per.personId}}" th:text="${person.firstName} + ${person.lastName}"/>
+		</ul>
+	</body>
+</html>

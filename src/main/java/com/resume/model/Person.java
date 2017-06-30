@@ -28,11 +28,13 @@ public class Person {
 	@NotNull
 	@Size(min=2, max=20)
 	private String email;
-	@Size(max=500)
+	/*@NotNull
+	private String password;*/
+	
 	private ArrayList<Education> eduList;
-	@Size(max=500)
+	
 	private ArrayList<Experience> expList;
-	@Size(max=500)
+	
 	private ArrayList<Skills> skillList;
 	
 	public Person(){

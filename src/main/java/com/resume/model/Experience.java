@@ -3,11 +3,13 @@ package com.resume.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Experience implements Serializable{
@@ -15,11 +17,20 @@ public class Experience implements Serializable{
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private int jobID; 
 	private String title; 
-	private String company; 
-	private LocalDateTime startDate; 
-	private LocalDateTime endDate;
+	private String company;
+	@Transient
+	private String startDate; 
+	private Date sDate;
+	@Transient
+	private String endDate;
+	private Date eDate;
 	private ArrayList <String> duties;
 	private long personId;
+	
+	public Experience(){	
+		
+		this.duties = new ArrayList<String>(); 
+	}
 	
 	public int getJobID() {
 		return jobID;
@@ -39,19 +50,21 @@ public class Experience implements Serializable{
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	
-	public LocalDateTime getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(LocalDateTime startDate) {
+
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public LocalDateTime getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(LocalDateTime endDate) {
+
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
+
 	public ArrayList<String> getDuties() {
 		return duties;
 	}
@@ -63,6 +76,22 @@ public class Experience implements Serializable{
 	}
 	public void setPersonId(long personId) {
 		this.personId = personId;
+	}
+
+	public Date getsDate() {
+		return sDate;
+	}
+
+	public void setsDate(Date sDate) {
+		this.sDate = sDate;
+	}
+
+	public Date geteDate() {
+		return eDate;
+	}
+
+	public void seteDate(Date eDate) {
+		this.eDate = eDate;
 	}
 	
 	

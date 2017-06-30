@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org">
-	<head>
+	<head th:replace="base :: head">
 		<meta charset="UTF-8"/>
 		<title>Insert title here</title>
 	</head>
 	<body>	
-	
-		<div>
-			<form  action="#" th:action="@{/education/save}"  method="post" th:object="${education}">
-				Degree obtained: 
-				<input type="text" th:field ="*{typeOfDegree}"  /> 
-				<span th:if="${#fields.hasErrors('typeOfDegree')}" th:errors="*{typeOfDegree}"></span><br/>
-				Institute: 
-				<input type="text" th:field="*{institute}"  /> 
-				<span th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"></span><br/>
-				End Date  
-				<input type="text" th:field="*{year}"  /> 
-				<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
-				<input name ="personId" th:value="${personId}"  /> 
-				<input type="submit" value="submit" />
-			</form>
+		<nav th:replace=" base :: nav"></nav>
+		<div class="container">
+			<div>
+				<form  action="#" th:action="@{/education/save}"  method="post" th:object="${education}">
+					Degree obtained: 
+					<input type="text" th:field ="*{typeOfDegree}"  /> 
+					<span th:if="${#fields.hasErrors('typeOfDegree')}" th:errors="*{typeOfDegree}"></span><br/>
+					Institute: 
+					<input type="text" th:field="*{institute}"  /> 
+					<span th:if="${#fields.hasErrors('institute')}" th:errors="*{institute}"></span><br/>
+					End Date  
+					<input type="text" placeholder="MM/DD/YYYY" th:field="*{year}"  /> 
+					<span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+					<input type="hidden" name ="personId" th:value="${personId}"  /> 
+					<input type="submit" value="submit" />
+				</form>
+			</div>
 		</div>
 		
 	

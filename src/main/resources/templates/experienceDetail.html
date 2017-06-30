@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org">
-	<head>
+	<head th:replace="base :: head">
 		<meta charset="ISO-8859-1"/>
 		<title>Insert title here</title>
 	</head>
 	<body>
-		<div th:each="experience: ${expList}">
-			<p th:text="${experience.title}"></p>
-			<p th:text="${experience.company}"></p>
-			<p th:text="${experience.startDate}"></p>
-			<p th:text="${experience.endDate}"></p>
-			<p th:text="${experience.duties}"></p>
-		</div>
-		<div th:if="${expList!=null}">
-			<a th:href="@{'/experience/add/'+ ${personId}}">add experience</a>
-			<a th:href="@{'/skill/add/'+ ${personId}}">next</a>
-		</div>
-			
+		<nav th:replace=" base :: nav"></nav>
+		<div class="container">
+			<div th:each="experience: ${expList}">
+				<p th:text="${experience.title}"></p>
+				<p th:text="${experience.company}"></p>
+				<p th:text="${experience.startDate}"></p>
+				<p th:text="${experience.endDate}"></p>
+				<p th:each="duty : ${experience.duties}">
+					<span th:text="${duty}"></span><br/>
+				</p>
+			</div>
+			<div th:if="${expList!=null}">
+				<a th:href="@{'/experience/add/'+ ${personId}}">add experience</a>
+				<a th:href="@{'/skill/add/'+ ${personId}}">next</a>
+			</div>
+		</div>	
 </body>
 </html>
