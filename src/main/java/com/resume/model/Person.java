@@ -1,5 +1,6 @@
 package com.resume.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -14,7 +16,7 @@ import javax.validation.constraints.Size;
 import org.mockito.internal.util.collections.Iterables;
 
 @Entity
-public class Person {
+public class Person implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -31,10 +33,13 @@ public class Person {
 	/*@NotNull
 	private String password;*/
 	
+	@Transient
 	private ArrayList<Education> eduList;
 	
+	@Transient
 	private ArrayList<Experience> expList;
 	
+	@Transient
 	private ArrayList<Skills> skillList;
 	
 	public Person(){

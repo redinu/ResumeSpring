@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,12 +19,14 @@ public class Experience implements Serializable{
 	private int jobID; 
 	private String title; 
 	private String company;
-	@Transient
-	private String startDate; 
-	private Date sDate;
-	@Transient
-	private String endDate;
-	private Date eDate;
+	
+	
+//	@Convert(converter = LocalDateTimeConverter.class)
+	private String sDate;
+	
+//	@Convert(converter = LocalDateTimeConverter.class)
+	private String eDate;
+	
 	private ArrayList <String> duties;
 	private long personId;
 	
@@ -50,20 +53,6 @@ public class Experience implements Serializable{
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
 
 	public ArrayList<String> getDuties() {
 		return duties;
@@ -78,21 +67,25 @@ public class Experience implements Serializable{
 		this.personId = personId;
 	}
 
-	public Date getsDate() {
+	public String getsDate() {
 		return sDate;
 	}
 
-	public void setsDate(Date sDate) {
+	public void setsDate(String sDate) {
 		this.sDate = sDate;
 	}
 
-	public Date geteDate() {
+	public String geteDate() {
 		return eDate;
 	}
 
-	public void seteDate(Date eDate) {
+	public void seteDate(String eDate) {
 		this.eDate = eDate;
 	}
+
+	
+
+	
 	
 	
 }

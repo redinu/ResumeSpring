@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmls:th="http://www.thymeleaf.org">
+<html xmls:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 	<head th:replace="base :: head">
 		<meta charset="ISO-8859-1"/>
 		<title>Insert title here</title>
@@ -17,12 +18,12 @@
 				 	<span th:if="${#fields.hasErrors('company')}" th:errors="*{company}" ></span>
 				</p>
 				<p> Start date: 
-					<input type="text" placeholder="MM/DD/YYYY" th:field ="*{startDate}" th:value="${experience.startDate}"/> 
-					<span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" ></span>
+					<input type="text" placeholder="MM/DD/YYYY" th:field ="*{sDate}" th:value="${experience.sDate}"/> 
+					<span th:if="${#fields.hasErrors('sDate')}" th:errors="*{sDate}" ></span>
 				</p>
 				<p> End date: 
-					<input type="text" placeholder="MM/DD/YYYY" th:field ="*{endDate}" th:value="${experience.endDate}" /> 
-					<span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" ></span>
+					<input type="text" placeholder="MM/DD/YYYY" th:field ="*{eDate}" th:value="${experience.eDate}" /> 
+					<span th:if="${#fields.hasErrors('eDate')}" th:errors="*{eDate}" ></span>
 				</p>
 				<p th:if="${dutylist!=null}">
 					<input type="hidden" th:field ="*{duties}"  th:value="${dutylist}" />

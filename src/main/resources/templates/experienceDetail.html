@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmls:th="http://www.thymeleaf.org">
+<html xmls:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 	<head th:replace="base :: head">
 		<meta charset="ISO-8859-1"/>
 		<title>Insert title here</title>
@@ -10,8 +11,8 @@
 			<div th:each="experience: ${expList}">
 				<p th:text="${experience.title}"></p>
 				<p th:text="${experience.company}"></p>
-				<p th:text="${experience.startDate}"></p>
-				<p th:text="${experience.endDate}"></p>
+				<p th:text="${experience.sDate}"></p>
+				<p th:text="${experience.eDate}"></p>
 				<p th:each="duty : ${experience.duties}">
 					<span th:text="${duty}"></span><br/>
 				</p>

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.resume.repositories.UserRepository;
+import com.resume.service.SSUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -23,10 +24,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/register").permitAll()
-        		.anyRequest().authenticated();
+ 
         http
                 .formLogin().failureUrl("/login?error")
                 .defaultSuccessUrl("/")
@@ -34,12 +32,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
-                .permitAll();
+                .permitAll()
+                .and().authorizeRequests()
+				.antMatchers("/", "/addResume", "/resume/**","/logout",
+						"/search/**", "/education/**", "/experience/**","/skill/**")
+				.authenticated();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceBean());
+    	auth.inMemoryAuthentication().withUser("user").password("password").roles("Recruiter");
+    	auth.userDetailsService(userDetailsServiceBean());
     }
     
     public UserDetailsService userDetailsServiceBean() throws Exception {

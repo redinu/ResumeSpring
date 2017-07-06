@@ -9,4 +9,6 @@ import com.resume.model.Skills;
 public interface SkillsRepository extends CrudRepository<Skills, Long> {
  
 	public List<Skills> findSkillsByPersonId(Long personId);
+
+	public List<Skills> findBySkill(String skill);
 }

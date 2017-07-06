@@ -2,20 +2,22 @@ package com.resume.helper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+import javax.swing.text.DateFormatter;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class StringToDateFormatter {
 
-	public Date dateFormatter(String inputDate){
-		SimpleDateFormat formatter = new SimpleDateFormat("MM/DD/YYYY");
-		try {
-			
-			Date date = formatter.parse(inputDate);
+	public LocalDateTime dateFormatter(String inputDate){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern(" MM/dd/yyyy");
+			LocalDateTime date = (LocalDateTime) formatter.parse(inputDate);
 			return date;
-		}catch(ParseException e){
-			e.printStackTrace();
-			return null;
-		}
-		
 	}
+		
 }
+

@@ -1,48 +1,48 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:replace="base :: head">
+	<head th:replace="base :: head">
 		<meta charset="ISO-8859-1"/>
 		<title>Insert title here</title>
 	</head>
 	<body>
-		<nav th:replace=" base :: nav"></nav>
-		<div class="container">
-			<div  th:each="person: ${people}">
+	<nav th:replace=" base :: nav"></nav>
+			<div class="container">
+			
+				<div th:each="person: ${all}">
 					<h1 th:text="${person.firstName} "><span th:text= " ${person.lastName}"/></h1>
-					<h4 th:text="${person.email}"/> 
+					<h6 th:text="${person.email}"/> 
 					
 					<h3 class="container-block-title">Education</h3>
 					<ul>
-		               <div th:each="education: ${person.eduList}">
+		               <li th:each="education: ${person.eduList}">
 							<h4 th:text="${education.typeOfDegree}"></h4>
 							<p th:text="${education.institute}"></p>
 							<p th:text="${education.endYear}"></p>
-						</div>
+						</li>
 					</ul>
 					<h3 class="container-block-title">Experience</h3>
 					<ul>
-						<div th:each="experience: ${person.expList}">
+						<li th:each="experience: ${person.expList}">
 								<b><h4 th:text="${experience.title}"></h4></b>
 								<p th:text="${experience.company}"></p>
-								<p th:text="${experience.sDate} to ${experience.eDate}"></p>
+								<p th:text="${experience.sDate} + ' to ' + ${experience.eDate}"></p>
 								<p>Duties</p>
-								<ol th:each="duty : ${experience.duties}">
-									<ol><span th:text="${duty}"></span></ol>
-								</ol>
-						</div>
+								<li th:each="duty : ${experience.duties}">
+									<span th:text="${duty}"></span>
+								</li>
+						</li>
 						
 					</ul>
 					<h3 class="container-block-title">Skills</h3>
 					<ul>
-						
-						<div th:each="skill: ${person.skillList}">
-								<p th:text="${skill.skill}"></p>
-								<p th:text="${skill.proficiency}"></p>
-						</div>
+						<li th:each="skill: ${person.skillList}">
+								<p th:text="${skill.skill} "></p>
+								<span  th:text="${skill.proficiency}"></span>
+						</li>
 						
 					</ul>
 			</div> 
 			</div>   
-</body>
+	</body>
 </html>

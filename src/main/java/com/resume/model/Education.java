@@ -1,6 +1,7 @@
 package com.resume.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -23,9 +24,8 @@ public class Education implements Serializable{
 		@NotNull
 		@Size(min=2, max=30)
 		private String institute; 
-		@Transient
-		private String year;
-		private Date endyear;
+		
+		private int endYear;
 		private long personId;
 		
 		public int getEduId() {
@@ -47,24 +47,19 @@ public class Education implements Serializable{
 			this.institute = institute;
 		}
 		
-		public String getYear() {
-			return year;
-		}
-		public void setYear(String year) {
-			this.year = year;
-		}
 		public long getPersonId() {
 			return personId;
 		}
 		public void setPersonId(long personId) {
 			this.personId = personId;
 		}
-		public Date getEndyear() {
-			return endyear;
+		public int getEndYear() {
+			return endYear;
 		}
-		public void setEndyear(Date endyear) {
-			this.endyear = endyear;
+		public void setEndYear(int endYear) {
+			this.endYear = endYear;
 		}
+	
 		
 		
 		

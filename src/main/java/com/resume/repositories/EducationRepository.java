@@ -10,4 +10,6 @@ public interface EducationRepository  extends CrudRepository<Education,Long>{
 	
 	public List<Education> findEducationByPersonId(Long personId);
 
+	public List<Education> findEducationByInstitute(String institute);
+
 }

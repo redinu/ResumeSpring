@@ -30,18 +30,18 @@ public class EducationController {
 		}
 
 		ArrayList<Education> eduList = new ArrayList<Education>();
-		Education e = new Education();
-		StringToDateFormatter s = new StringToDateFormatter();
-		e.setEndyear(s.dateFormatter(edu.getYear()));
+		
+		/*	Education e = new Education();
+		
+		e.setEndyear((edu.getYear()));
 		e.setInstitute(edu.getInstitute());
-		e.setTypeOfDegree(edu.getTypeOfDegree());
-		e.setYear(edu.getYear());
-		e.setPersonId(personId);
-		eduList.add(e);
+		e.setTypeOfDegree(edu.getTypeOfDegree());*/
+		edu.setPersonId(personId);
+		eduList.add(edu);
 		model.addAttribute("eduList", eduList);
 		model.addAttribute("personId", personId);
 
-		educationRepository.save(e);
+		educationRepository.save(edu);
 
 		return "educationDetail";
 	}
@@ -52,8 +52,5 @@ public class EducationController {
 		eduModel.addAttribute("personId", personId);
 		return "educationForm";
 	}
-	
-	
-	
 	
 }

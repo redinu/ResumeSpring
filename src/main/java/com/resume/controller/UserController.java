@@ -2,6 +2,7 @@ package com.resume.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,11 +11,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.core.annotation.AuthenticationPrincipal;*/
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,9 +34,17 @@ import com.resume.repositories.PersonRepository;
 import com.resume.repositories.RoleRepository;
 import com.resume.repositories.SkillsRepository;
 import com.resume.repositories.UserRepository;
+import com.resume.service.UserService;
+import com.resume.validator.UserValidator;
 
 @Controller
 public class UserController {
+	
+	@Autowired
+	private UserValidator userValidator;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -52,76 +63,116 @@ public class UserController {
 	
 	@Autowired
 	SkillsRepository skillRepository;
-	 
+	
+	@RequestMapping( path = "/")
+	public String displayAll(Principal principal, Model model){
+		
+		List<Person> personList = (List<Person>) personRepository.findAll();
+		List<Person> all = new ArrayList<Person>();
+		for(Person p : personList){
+			long id = p.getPersonId();
+			List<Education>  educationList = educationRepository.findEducationByPersonId(id);
+			List<Experience> expList = experienceRepository.findExperienceByPersonId(id);
+			List<Skills> skillList = skillRepository.findSkillsByPersonId(id);
+			p.setEduList( (ArrayList<Education>) educationList );
+			p.setExpList((ArrayList<Experience>) expList);
+			p.setSkillList((ArrayList<Skills>) skillList);
+			all.add(p);
+		}
+		User user = userRepository.findByUsername(principal.getName());
+		model.addAttribute("all",all);
+		model.addAttribute("user", user);
+		return "home";
+	}
+	
 	@RequestMapping( path = "/login")
 	public String login(){
 		
 		return "login";
 	}
 	
-	@RequestMapping( path = "/register")
+	@RequestMapping( path = "/register/jobseeker")
 	public String register(Model model){
 	   model.addAttribute("user",new User());
-	    return "register";
+	    return "jobseekerRegister";
 	}
-	
+	@RequestMapping( path = "/register/recruiter")
+	public String recruiterRegister(Model model){
+	   model.addAttribute("user",new User());
+	    return "recruiterRegister";
+	}
+
 	@RequestMapping(path = "/register", method=RequestMethod.POST)
-	public String register(@Valid User user, BindingResult bindingResult,Model model){
+	public String register(@Valid User user,BindingResult bindingResult, @RequestParam String role, Model model){
 		
-		Role role = new Role();
-		Set<Role> roles = user.getRoles();
+		Role rol = new Role();
 		Set<User> users = new HashSet<User>();
-		
+		userValidator.validate(user, bindingResult);
 		if(bindingResult.hasErrors()){
-			return "register";
+			if(role.equals("Job Seeker")){
+				return "jobseekerRegister";
+			}else{
+				return "recruiterRegister";
+			}
 		}
 		
 		if(!userRepository.existsByUsername(user.getUsername())){
 		
 			user.setEnabled(true);
-			users.add(user);
+			rol.setRole(role);
+			user.setRoles(Arrays.asList(rol));
 			
-			for(Role r: roles){
-				role.setRole(r.getRole());
-			}
-		
-			role.setUsers(users);
-			roleRepository.save(role);
+			users.add(user);
+			rol.setUsers(users);
+			
+			roleRepository.save(rol);
 			userRepository.save(user);
 		
 			return "redirect:/login";
 		}else{
 			model.addAttribute("errormessage", "Someone's already using that email. If that’s you, please sign in.");
-			return "register";
+			if(role.equals("jobseeker")){
+				return "jobseekerRegister";
+			}else{
+				return "recruiterRegister";
+			}
 		}
 	}
 
 	
-	@RequestMapping(value = "/search/users", params = "s")
-	public String searchFriends(@RequestParam("s") String s, Principal principal, Model model) {
-		Person p = new Person();
-		List<Person> personList = personRepository.findPersonByFirstName(principal.getName());
+	@RequestMapping(value = "/search/users")
+	public String searchFriends(@RequestParam String s, Principal principal, Model model) {
 		
-		model.addAttribute("friends",personList);
+		List<Person> personList = personRepository.findByFirstName(s);
+		List<Person> all = new ArrayList<Person>();
+		for(Person p : personList){
+			long id = p.getPersonId();
+			List<Education>  educationList = educationRepository.findEducationByPersonId(id);
+			List<Experience> expList = experienceRepository.findExperienceByPersonId(id);
+			List<Skills> skillList = skillRepository.findSkillsByPersonId(id);
+			p.setEduList( (ArrayList<Education>) educationList );
+			p.setExpList((ArrayList<Experience>) expList);
+			p.setSkillList((ArrayList<Skills>) skillList);
+			all.add(p);
+		}
+		
+		model.addAttribute("all",all);
 		model.addAttribute("searchString", s);
 		
-		return "search";
+		return "home";
 	}
 	
-	@RequestMapping(value = "/search/company", params = "s")
-	public String searchCompanies(@RequestParam("s") String s, Principal principal, Model model) {
+	@RequestMapping(value = "/search/company")
+	public String searchCompanies(@RequestParam String s, Principal principal, Model model) {
 		
-	//	List<Experience> exByComp= experienceRepository.findExperienceByCompany(s);
-		
-		List<Experience> ex = (List<Experience>) experienceRepository.findAll();
 		List<Experience> exByComp = experienceRepository.findExperienceByCompany(s);
+		
 		ArrayList<Person> personList = new ArrayList<Person>();
 		for(Experience e : exByComp){
 			long pId = e.getPersonId();
 			Person person = personRepository.findOne(pId);
 			personList.add(person);
 		}
-		model.addAttribute("allExp",exByComp);
 		model.addAttribute("searchString", s);
 		model.addAttribute("allPer", personList);
 		
@@ -129,29 +180,49 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value = "/search?action=school", params = "s")
+	@RequestMapping(value = "/search/school", params = "s")
 	public String searchSchools(@RequestParam("s") String s, Principal principal, Model model) {
 		
 		
-		List<Education> ed = (List<Education>) educationRepository.findAll();
+		List<Education> ed = (List<Education>) educationRepository.findEducationByInstitute(s);
 		
-		model.addAttribute("allEdu", ed);
+		ArrayList<Person> personList = new ArrayList<Person>();
+		for(Education e : ed){
+			long pId = e.getPersonId();
+			Person person = personRepository.findOne(pId);
+			personList.add(person);
+		}
 		model.addAttribute("searchString", s);
+		model.addAttribute("allPer", personList);
 		
 		return "schools";
 		
 	}
 	
-	@RequestMapping(value = "/search?action=skill", params = "s")
+	@RequestMapping(value = "/search/skill", params = "s")
 	public String searchSkill(@RequestParam("s") String s, Principal principal, Model model) {
 		
 		
-		List<Skills> sk = (List<Skills>) skillRepository.findAll();
+		List<Skills> sk = (List<Skills>) skillRepository.findBySkill(s);
 		
-		model.addAttribute("allSkills", sk);
+		ArrayList<Person> personList = new ArrayList<Person>();
+		for(Skills e : sk){
+			long pId = e.getPersonId();
+			Person person = personRepository.findOne(pId);
+			personList.add(person);
+		}
+		
 		model.addAttribute("searchString", s);
+		model.addAttribute("allPer", personList);
 		
 		return "skill";
 		
 	}
+	public UserValidator getUserValidator() {
+	    return userValidator;
+	}
+	public void setUserValidator(UserValidator userValidator) {
+	    this.userValidator = userValidator;
+	}
+	
 }

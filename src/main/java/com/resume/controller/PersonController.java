@@ -38,7 +38,7 @@ public class PersonController {
 	@Autowired
 	SkillsRepository skillsRepository; 
 	
-	@GetMapping("/")
+	@GetMapping("/addResume")
 	public String getForm(Model model){
 		
 		Person person = new Person();
@@ -69,12 +69,12 @@ public class PersonController {
 		List<Education> edu = educationRepository.findEducationByPersonId(personId);
 		List<Experience> exp = experienceRepository.findExperienceByPersonId(personId);
 		List<Skills> sk = skillsRepository.findSkillsByPersonId(personId);
-		p.setEduList( (ArrayList<Education>) edu);
-		p.setExpList((ArrayList<Experience>) exp);
-		p.setSkillList((ArrayList<Skills>) sk);
 		
-		personRepository.save(p);
-		model.addAttribute("person", p);
+		
+		model.addAttribute("people", p);
+		model.addAttribute("educations", edu);
+		model.addAttribute("experiences", exp);
+		model.addAttribute("skills", sk);
 		return "resume";
 	}
 	

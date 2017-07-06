@@ -1,6 +1,6 @@
 package com.resume.controller;
 
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,20 +33,6 @@ public class ExperienceController {
 		return "experienceForm";
 	}
 	
-/*	@RequestMapping(path="/experience/save", method=RequestMethod.POST)
-	public String saveExperience(@Valid Experience ex, BindingResult bindingResult,Long personId,  Model model){
-		if(bindingResult.hasErrors()){
-			return "experienceForm";
-		}
-		ArrayList<Experience> expList = new ArrayList<Experience>();
-		expList.add(ex);
-		model.addAttribute("personId", personId);
-		model.addAttribute("expList", expList);
-		experienceRepository.save(ex);
-		return "experienceDetail";
-		
-	}*/
-	
 	@RequestMapping(path="/experience/save", method=RequestMethod.POST)
 	public String addDuty(@Valid Experience ex, BindingResult bindingResult,Long personId,
 					String addDuty, String newduty, Model model){
@@ -68,9 +54,7 @@ public class ExperienceController {
 			return "experienceForm";
 			
 		} else{
-			StringToDateFormatter s = new StringToDateFormatter();
-			ex.setsDate(s.dateFormatter(ex.getStartDate()));
-			ex.seteDate(s.dateFormatter(ex.getEndDate()));
+			
 			ArrayList<Experience> expList = new ArrayList<Experience>();
 			ex.getDuties().add(newduty);
 			expList.add(ex);

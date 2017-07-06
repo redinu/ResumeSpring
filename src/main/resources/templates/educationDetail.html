@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmls:th="http://www.thymeleaf.org">
+<html xmls:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 	<head th:replace="base :: head">
 		<meta charset="ISO-8859-1"/>
 		<title>Insert title here</title>
@@ -10,7 +11,7 @@
 			<div th:each="education: ${eduList}">
 			<p th:text="${education.typeOfDegree}"></p>
 			<p th:text="${education.institute}"></p>
-			<p th:text="${education.year}"></p>
+			<p th:text="${education.endYear}"></p>
 			</div>
 			<div th:if="${eduList!=null}">
 				<a th:href="@{'/education/add/'+ ${personId}}">add education</a>

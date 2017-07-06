@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="ISO-8859-1"/>
-	<title>Insert title here</title>
+<html xmls:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head th:replace="base :: head">
+		<meta charset="ISO-8859-1"/>
+		<title>Insert title here</title>
 	</head>
 	<body>
-		<ul th:each="edu : ${allEdu}">
-			<li th:text="${edu.institutes}"></li>
+		<nav th:replace=" base :: nav"></nav>
+		<ul th:each="per : ${allPer}">
+			<li><a th:href = "@{'/resume/' + ${per.personId}}"  th:text="${per.firstName} + ' ' + ${per.lastName}"/></li>
 		</ul>
 	</body>
 </html>
