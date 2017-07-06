@@ -20,7 +20,7 @@
 					End Year  
 					<!-- input with datetimepicker -->
 					<input type="text"  th:field ="*{endYear}" />
-					<span th:if="${#fields.hasErrors('endYear')}" th:errors="*{endYar}"></span><br/>
+					<span th:if="${#fields.hasErrors('endYear')}" th:errors="*{endYear}"></span><br/>
 				
 					<input type="hidden" name ="personId" th:value="${personId}"  /> 
 					<input type="submit" value="submit" />

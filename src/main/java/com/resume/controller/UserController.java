@@ -80,7 +80,7 @@ public class UserController {
 			all.add(p);
 		}
 		User user = userRepository.findByUsername(principal.getName());
-		model.addAttribute("all",all);
+		model.addAttribute("all", all);
 		model.addAttribute("user", user);
 		return "home";
 	}
@@ -105,7 +105,7 @@ public class UserController {
 	@RequestMapping(path = "/register", method=RequestMethod.POST)
 	public String register(@Valid User user,BindingResult bindingResult, @RequestParam String role, Model model){
 		
-		Role rol = new Role();
+		Role rol = roleRepository.findByRole(role);
 		Set<User> users = new HashSet<User>();
 		userValidator.validate(user, bindingResult);
 		if(bindingResult.hasErrors()){
@@ -119,13 +119,11 @@ public class UserController {
 		if(!userRepository.existsByUsername(user.getUsername())){
 		
 			user.setEnabled(true);
-			rol.setRole(role);
+			
 			user.setRoles(Arrays.asList(rol));
 			
 			users.add(user);
-			rol.setUsers(users);
 			
-			roleRepository.save(rol);
 			userRepository.save(user);
 		
 			return "redirect:/login";

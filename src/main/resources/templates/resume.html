@@ -8,41 +8,40 @@
 	<body>
 		<nav th:replace=" base :: nav"></nav>
 		<div class="container">
-			<div  th:each="person: ${people}">
+			<div  th:each="person: ${person}">
 					<h1 th:text="${person.firstName} "><span th:text= " ${person.lastName}"/></h1>
 					<h4 th:text="${person.email}"/> 
+			</div>	
+				<h3 class="container-block-title">Education</h3>
 					
-					<h3 class="container-block-title">Education</h3>
-					<ul>
-		               <div th:each="education: ${person.eduList}">
-							<h4 th:text="${education.typeOfDegree}"></h4>
-							<p th:text="${education.institute}"></p>
-							<p th:text="${education.endYear}"></p>
-						</div>
-					</ul>
-					<h3 class="container-block-title">Experience</h3>
-					<ul>
-						<div th:each="experience: ${person.expList}">
+		        <ul th:each="education: ${educations}">
+					<h4 th:text="${education.typeOfDegree}"></h4>
+					<p th:text="${education.institute}"></p>
+					<p th:text="${education.endYear}"></p>
+						
+				</ul>
+				<h3 class="container-block-title">Experience</h3>
+					
+						<ul th:each="experience: ${experiences}">
 								<b><h4 th:text="${experience.title}"></h4></b>
 								<p th:text="${experience.company}"></p>
-								<p th:text="${experience.sDate} to ${experience.eDate}"></p>
+								<p th:text="${experience.sDate} + ' to ' + ${experience.eDate}"></p>
 								<p>Duties</p>
 								<ol th:each="duty : ${experience.duties}">
 									<ol><span th:text="${duty}"></span></ol>
 								</ol>
-						</div>
 						
-					</ul>
+						</ul>
 					<h3 class="container-block-title">Skills</h3>
 					<ul>
 						
-						<div th:each="skill: ${person.skillList}">
+						<div th:each="skill: ${skills}">
 								<p th:text="${skill.skill}"></p>
 								<p th:text="${skill.proficiency}"></p>
 						</div>
 						
 					</ul>
 			</div> 
-			</div>   
+			  
 </body>
 </html>

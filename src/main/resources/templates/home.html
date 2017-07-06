@@ -8,41 +8,31 @@
 	<body>
 	<nav th:replace=" base :: nav"></nav>
 			<div class="container">
-			
-				<div th:each="person: ${all}">
-					<h1 th:text="${person.firstName} "><span th:text= " ${person.lastName}"/></h1>
-					<h6 th:text="${person.email}"/> 
-					
-					<h3 class="container-block-title">Education</h3>
-					<ul>
-		               <li th:each="education: ${person.eduList}">
-							<h4 th:text="${education.typeOfDegree}"></h4>
-							<p th:text="${education.institute}"></p>
-							<p th:text="${education.endYear}"></p>
-						</li>
-					</ul>
-					<h3 class="container-block-title">Experience</h3>
-					<ul>
-						<li th:each="experience: ${person.expList}">
-								<b><h4 th:text="${experience.title}"></h4></b>
-								<p th:text="${experience.company}"></p>
-								<p th:text="${experience.sDate} + ' to ' + ${experience.eDate}"></p>
-								<p>Duties</p>
-								<li th:each="duty : ${experience.duties}">
-									<span th:text="${duty}"></span>
-								</li>
-						</li>
-						
-					</ul>
-					<h3 class="container-block-title">Skills</h3>
-					<ul>
-						<li th:each="skill: ${person.skillList}">
-								<p th:text="${skill.skill} "></p>
-								<span  th:text="${skill.proficiency}"></span>
-						</li>
-						
-					</ul>
-			</div> 
+				<table class="table table-hover">
+					<tr>
+						<th>Id</th>					
+	                    <th>Name</th>
+	                    <th>Email</th>
+	                    <th>Degree</th>
+	                    <th>Skills</th>
+				    </tr>
+					<div th:each="person: ${all}">
+					<tr> 
+						<td th:text="${person.personId}"/>
+						<td><a th:href="@{'/resume/' + ${person.personId}}" ><h3 th:text="${person.firstName} + ' ' + ${person.lastName}"></h3></a></td>
+						<td><h4 th:text="${person.email}"/> </td>
+						<td>
+							<p th:each="education: ${person.eduList}">
+								<h4 th:text="${education.typeOfDegree}"></h4>
+							</p>
+						</td>
+			            <td><p th:each="skill: ${person.skillList}">
+								<span th:text="${skill.skill} "/>
+							</p>
+						</td>	
+					</tr>
+					</div> 
+				</table>
 			</div>   
 	</body>
 </html>

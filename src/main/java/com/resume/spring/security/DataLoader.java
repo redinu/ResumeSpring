@@ -1,4 +1,4 @@
-package com.resume.spring.security;
+/*package com.resume.spring.security;
 
 import java.util.Arrays;
 
@@ -52,3 +52,4 @@ public class DataLoader implements CommandLineRunner{
 
     }
 }
+*/

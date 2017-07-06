@@ -71,7 +71,7 @@ public class PersonController {
 		List<Skills> sk = skillsRepository.findSkillsByPersonId(personId);
 		
 		
-		model.addAttribute("people", p);
+		model.addAttribute("person", p);
 		model.addAttribute("educations", edu);
 		model.addAttribute("experiences", exp);
 		model.addAttribute("skills", sk);

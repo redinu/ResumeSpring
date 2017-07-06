@@ -8,7 +8,7 @@
 	<body>
 		<nav th:replace=" base :: nav"></nav>
 		<ul th:each="per : ${friends}">
-			<a th:ref = "@{/resume/{per.personId}}" th:text="${per.firstName} + ${per.lastName}"/>
+			<a th:ref = "@{'/resume/' + ${per.personId}}" th:text="${per.firstName} + ${per.lastName}"/>
 		</ul>
 	</body>
 </html>
