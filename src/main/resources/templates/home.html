@@ -9,8 +9,8 @@
 	<nav th:replace=" base :: nav"></nav>
 		<div class="jumbotron">
 	  		<div class="container">
-	  			<div th:if="${all==null}">
-	  				<h1>Start using the robo resume by searching jobs, people, companies and many more...</h1>
+	  			<div  class="jumbotron">
+	  				<h2 th:text="${message}">Start using the robo resume by searching jobs, people, companies and many more...</h2>
 	  			</div>
 				<table th:if="${all!=null}" class="table table-hover">
 					<tr>				

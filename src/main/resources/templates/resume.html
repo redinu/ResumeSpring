@@ -32,25 +32,30 @@
 									<p th:text="${experience.company}"></p>
 									<p th:text="${experience.sDate} + ' to ' + ${experience.eDate}"></p>
 									<p>Duties</p>
-									<ol th:each="duty : ${experience.duties}"> 
-										<li>
-											<p th:text="${duty}"></p>
+									<ul > 
+										<li th:each="duty : ${experience.duties}">
+											<p  th:text="${duty}"></p>
 										</li>
-									</ol>
+									</ul>
 								<br/>
 							</ul>
 						
 						</div>
 						<div th:if="${skills!=null}">
 						<strong><p class="container-block-title">Skills</p></strong>
-						
-							<ul th:each="skill: ${skills}">
-								<li>	
-									<p th:text="${skill.skill}"></p>
-									<p th:text="${skill.proficiency}"></p>
+							<table class="table table-hover">
+								<tr>				
+				                    <th>Skill</th>
+				                    <th>Rating based on scale of one to ten</th>
+				                </tr>
+							<div th:each="skill: ${skills}">
+								<tr>	
+									<td> <p th:text="${skill.skill}"></p></td>
+									<td> <p th:text="${skill.proficiency}"></p></td>
 									
-								</li>
-							</ul>
+								</tr>
+							</div>
+							</table>
 						</div>
 				</div> 
 			</div>

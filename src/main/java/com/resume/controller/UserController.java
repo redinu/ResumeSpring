@@ -68,9 +68,14 @@ public class UserController {
 	public String displayAll(Principal principal, Model model){
 		
 		List<Person> personList = (List<Person>) personRepository.findAll();
+		if(personList==null){
+			model.addAttribute("message", "Get started with  robo resume app and search jobs, people, companies and many more...");
+			return "home";
+		}else{
 		List<Person> all = new ArrayList<Person>();
 		for(Person p : personList){
 			long id = p.getPersonId();
+			
 			List<Education>  educationList = educationRepository.findEducationByPersonId(id);
 			List<Experience> expList = experienceRepository.findExperienceByPersonId(id);
 			List<Skills> skillList = skillRepository.findSkillsByPersonId(id);
@@ -83,6 +88,7 @@ public class UserController {
 		model.addAttribute("all", all);
 		model.addAttribute("user", user);
 		return "home";
+		}
 	}
 	
 	@RequestMapping( path = "/login")
