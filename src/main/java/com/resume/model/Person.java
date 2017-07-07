@@ -13,7 +13,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.mockito.internal.util.collections.Iterables;
 
 @Entity
 public class Person implements Serializable {
