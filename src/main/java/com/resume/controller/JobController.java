@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.resume.model.Job;
+import com.resume.model.Skills;
 import com.resume.model.User;
 import com.resume.repositories.JobRepository;
+import com.resume.repositories.SkillsRepository;
 import com.resume.repositories.UserRepository;
 
 @Controller
@@ -31,6 +33,8 @@ public class JobController {
 	JobRepository jobRepository;
 	@Autowired
 	UserRepository userRepository;
+	@Autowired
+	SkillsRepository skillsRepository; 
 	
 	@RequestMapping(path = "/jobpost", method=RequestMethod.GET)
 	private String getJobForm(Model model){
@@ -39,35 +43,53 @@ public class JobController {
 	}
 	
 	@RequestMapping(path="/jobpost", method=RequestMethod.POST)
-	private String postJob(@Valid Job job,BindingResult bindingResult, String addSkill,
-							String newSkill, Principal principal, Model model){
+	private String postJob(@Valid Job job, BindingResult bindingResult, 
+							 Principal principal, Model model){
+		
+		User user = userRepository.findByUsername(principal.getName());
+		
 		if(bindingResult.hasErrors()){
 			return "jobForm";
 		}
-		if(addSkill!=null){
-			ArrayList<String> skills = job.getSkills();
-			
-			if(newSkill!=null){
-				skills.add(newSkill);
-			}
-			User user = userRepository.findByUsername(principal.getName());
-			model.addAttribute("userId", user.getId());
-			model.addAttribute("job", job);
-			model.addAttribute("skillList", skills);
-			
-			return "jobForm";
-			
-		}else{
-			
 			job.setPostedDate(new Date());
-			job.getSkills().add(newSkill);
+			job.setPostedBy(user.getFirstName());
 			jobRepository.save(job);
-			Iterable<Job> jobs = jobRepository.findAll();
 			
-			model.addAttribute("jobs", jobs);
-			return "jobs";
-		}
+			List<Job> j = jobRepository.findByPostedBy(user.getFirstName());
+			int i = j.size();
+			Job jobatIndex = j.get(i-1);
+			model.addAttribute("jobId",jobatIndex.getJobId());
+			model.addAttribute("skills", new Skills());
+			return "jobskillForm";
+		
 	}
+	@RequestMapping(path="/job/skill/{jobId}")
+	private String postJob(@PathVariable("jobId")Long jobId, ArrayList<Skills> skList, Model model){
+		
+		model.addAttribute("jobId", jobId);
+		model.addAttribute("skillList",skList);
+		model.addAttribute("skills", new Skills());
+		return "jobskillForm";
+	}
+	
+	@RequestMapping(path="/job/skill", method=RequestMethod.POST)
+	private String addSkillToJob(@Valid Skills skill, BindingResult bindingResult,Long jobId, Principal principal, Model model  ){
+		
+		
+		ArrayList<Skills> skills =  new ArrayList<Skills>();
+		User user = userRepository.findByUsername(principal.getName());
+		
+		if(bindingResult.hasErrors()){
+			return "jobskillForm";
+		}
+			skill.setJob(jobRepository.findOne(jobId));
+			skillsRepository.save(skill);
+			skills.add(skill);
+			model.addAttribute("jobId", jobId);
+			model.addAttribute("skList", skills);
+			return "jobskilldetail";
+		}
+	
 	
 	@RequestMapping(path="/alljobs")	
 	private String allJobs(Model model){
@@ -79,9 +101,11 @@ public class JobController {
 	}
 	
 	@RequestMapping(path="/job/{jobId}")
-	private String findJob(@PathVariable("jobId") Long id, Model model){
+	private String findJob(@PathVariable("jobId") Long jobId, Model model){
 		
-		Job job = jobRepository.findOne(id);
+		Job job = jobRepository.findOne(jobId);
+		List<Skills> skl = skillsRepository.findByJob_JobId(jobId);
+		model.addAttribute("skills", skl);
 		model.addAttribute("job", job);
 		return "jobDetail";
 	}

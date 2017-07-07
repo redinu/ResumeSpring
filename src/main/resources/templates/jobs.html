@@ -15,11 +15,8 @@
 							<strong><a th:href="'/job/' + ${job.jobId}"><h3 th:text="'Title:' + ${job.title}"></h3></a></strong>
 							<p>Company: <span th:text="${job.employer}"></span> </p>
 							<p>Salary: <span th:text="${job.salary}"></span></p>
-							<p> Posted Date: <span th:text="${job.postedDate}"/></p>
-							<p>Skills</p>
-								<ul th:each="skill : ${job.skills}">
-									<li> <p th:text="${skill}"/></li>
-								</ul>
+							<p> Posted Date: <span th:text="${#dates.format(job.postedDate, 'MMM-dd-yyyy')}"/></p>
+							
 							<br/>
 					
 					</ul>

@@ -1,11 +1,15 @@
 package com.resume.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,18 +17,21 @@ import javax.validation.constraints.Size;
 public class Skills implements Serializable {
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	private int skillId;
+	private long skillId;
 	@NotNull
 	@Size(min=2, max=20)
 	private String skill;
-	@NotNull
+	
 	private int proficiency;
 	private long personId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "jobId")
+	private Job job;
 	
-	public int getSkillId() {
+	public long getSkillId() {
 		return skillId;
 	}
-	public void setSkillId(int skillId) {
+	public void setSkillId(long skillId) {
 		this.skillId = skillId;
 	}
 	public String getSkill() {
@@ -44,6 +51,12 @@ public class Skills implements Serializable {
 	}
 	public void setPersonId(long personId) {
 		this.personId = personId;
+	}
+	public Job getJob() {
+		return job;
+	}
+	public void setJob(Job job) {
+		this.job = job;
 	}
 	
 	

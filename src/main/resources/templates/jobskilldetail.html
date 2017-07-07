@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html xmls:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	<head th:replace="base :: head">
+		<meta charset="ISO-8859-1"/>
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<nav th:replace=" base :: nav"></nav>
+		<div class="jumbotron">
+			<div class="container">
+			
+				<div th:each="skill: ${skList}">
+					<label >Skills : <p th:text="${skill.skill}"></p></label>
+				</div>
+				<div th:if="${skList!=null}">
+					<form  action ="#"  th:action="@{'/job/skill/' + ${jobId}}"  method = "post">
+						<input type="hidden" name="skList" th:value = "${skList}"/>
+						<input type = "submit" value="Add skill"/>
+					</form>
+				</div>
+				<div th:if="${skList!=null}">
+					<a th:href="@{'/job/' + ${jobId}}">Done</a>
+				</div>	
+			</div>
+		</div>		
+	</body>
+</html>

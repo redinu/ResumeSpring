@@ -25,15 +25,15 @@
 						</ul>
 					</div>
 					<div th:if="${experiences!=null}">
-					<strong><p class="container-block-title">Experience</p></strong>
+					<strong><p  class="container-block-title" th:text="Experience"></p></strong>
 						
 							<ul th:each="experience: ${experiences}">
 									<b><p th:text="${experience.title}"></p></b>
 									<p th:text="${experience.company}"></p>
 									<p th:text="${experience.sDate} + ' to ' + ${experience.eDate}"></p>
 									<p>Duties</p>
-									<ol> 
-										<li th:each="duty : ${experience.duties}">
+									<ol th:each="duty : ${experience.duties}"> 
+										<li>
 											<p th:text="${duty}"></p>
 										</li>
 									</ol>

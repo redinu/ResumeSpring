@@ -1,9 +1,10 @@
-/*package com.resume.spring.security;
+package com.resume.spring.security;
 
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.resume.model.Role;
@@ -22,7 +23,9 @@ public class DataLoader implements CommandLineRunner{
 
     @Autowired
     RoleRepository roleRepository;
-
+   
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... strings) throws Exception {
@@ -36,20 +39,23 @@ public class DataLoader implements CommandLineRunner{
 
         User user = new User("bob@bob.com","bob","Bob","Bobberson", true, "bob");
         user.setRoles(Arrays.asList(jobSeekerRole));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
         user = new User("jim@jim.com","jim","Jim","Jimmerson", true, "jim");
         user.setRoles(Arrays.asList(jobSeekerRole));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
         user = new User("admin@secure.com","password","Admin","User", true, "admin");
         user.setRoles(Arrays.asList(recruiterRole));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
         user = new User("sam@every.com","password","Sam","Everyman", true, "everyman");
         user.setRoles(Arrays.asList(jobSeekerRole, recruiterRole));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
     }
 }
-*/

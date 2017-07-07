@@ -1,5 +1,7 @@
 package com.resume.controller;
 
+import java.security.Principal;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,13 +17,28 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.resume.model.Job;
+import com.resume.model.Person;
 import com.resume.model.Skills;
+import com.resume.model.User;
+import com.resume.repositories.JobRepository;
+import com.resume.repositories.PersonRepository;
 import com.resume.repositories.SkillsRepository;
+import com.resume.repositories.UserRepository;
 
 @Controller
 public class SkillsController {
 	@Autowired
 	SkillsRepository skillsRepository; 
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	PersonRepository personRepository;
+	
+	@Autowired
+	JobRepository jobRepository;
 	
 	@RequestMapping(path="/skill/add/{personId}")
 	public String nextForm( @PathVariable Long personId, Model skModel){
@@ -46,6 +63,27 @@ public class SkillsController {
 		skillsRepository.save(sk);
 		return "skillDetail";
 	
+	}
+	
+	@RequestMapping(path="/skill/notification")
+	public String notifyBySkill(Principal principal, Model model){
+		
+		ArrayList<String> test = new ArrayList<String>();
+		ArrayList<Job> jobs =new ArrayList<Job>();
+		User user = userRepository.findByUsername(principal.getName());
+		Person person = personRepository.findPersonByEmail(user.getEmail());
+		long id = person.getPersonId();
+		List<Skills> skillList = skillsRepository.findSkillsByPersonId(id);
+		
+		
+		for(Skills sk: skillList){
+			System.out.println(sk);
+			List<Job> jb = jobRepository.findAllBySkills(sk);
+			System.out.println(jb);
+			jobs.addAll(jb);
+		}
+		model.addAttribute("jobs", jobs);
+		return "jobs";
 	}
 	
 	

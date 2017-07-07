@@ -1,13 +1,19 @@
 package com.resume.model;
 
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Job {
@@ -15,18 +21,28 @@ public class Job {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long jobId;
+	
 	@Column(name = "title", nullable = false)
 	private String title;
+	
 	@Column(name = "employer", nullable = false)
 	private String employer;
+	
 	@Column(name = "description", nullable = false)
 	private String description;
+	
 	@Column(name = "postedDate")
 	private Date postedDate;
+	
+	@Column(name = "postedBy")
+	private String postedBy;
+	
 	@Column(name = "salary")
 	private double salary;
 	
-	private ArrayList<String> skills;
+	@OneToMany(mappedBy = "skill")
+	private Collection<Skills> skills;
+	
 	
 	public long getJobId() {
 		return jobId;
@@ -58,18 +74,30 @@ public class Job {
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
-	public ArrayList<String> getSkills() {
+	
+	public Collection<Skills> getSkills() {
+		if (null == skills) {
+			skills = new ArrayList<Skills>();
+		}
 		return skills;
 	}
-	public void setSkills(ArrayList<String> skills) {
-		this.skills = skills;
-	}
+
 	public Date getPostedDate() {
 		return postedDate;
 	}
 	public void setPostedDate(Date date) {
 		this.postedDate = date;
 	}
+	public String getPostedBy() {
+		return postedBy;
+	}
+	public void setPostedBy(String postedBy) {
+		this.postedBy = postedBy;
+	}
+	public void setSkills(Collection<Skills> skills) {
+		this.skills = skills;
+	}
+
 	
 	
 }

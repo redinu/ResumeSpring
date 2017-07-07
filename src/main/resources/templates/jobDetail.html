@@ -13,7 +13,12 @@
 				<p >Company: <span th:text="${job.employer}"/></p>
 				<p >Description: <span th:text="${job.description}"/></p>
 				<p >Salary: <span th:text="${job.salary}"/></p>
-				<p >Posted Date: <span th:text="${job.postedDate}"/></p>
+				<p >Posted Date: <span th:text="${#dates.format(job.postedDate, 'MMM-dd-yyyy')}"/></p>
+				<p>Skills</p>
+					<ul th:each="skill : ${skills}">
+						<li> <p th:text="${skill.skill}"/></li>
+					</ul>
+					<br/>
 				<div></div>
 			</div>
 		</div>

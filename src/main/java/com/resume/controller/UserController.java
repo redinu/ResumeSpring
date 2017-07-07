@@ -122,9 +122,11 @@ public class UserController {
 			
 			user.setRoles(Arrays.asList(rol));
 			
-			users.add(user);
-			
-			userRepository.save(user);
+			if(role.equals("Recruiter")){
+			userService.saveRecruiter(user);
+			}else{
+				userService.saveJobSeeker(user);
+			}
 		
 			return "redirect:/login";
 		}else{
