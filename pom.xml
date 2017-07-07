@@ -71,10 +71,10 @@
 		        <version>1.5.1</version>
 		</dependency>
 		<dependency>
-		        <groupId>org.postgresql</groupId>
-		        <artifactId>postgresql</artifactId>
-		        <version>9.4-1201-jdbc42</version>
-		</dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1206-jdbc42</version>
+        </dependency>
 		<dependency>
 		        <groupId>net.sourceforge.nekohtml</groupId>
 		        <artifactId>nekohtml</artifactId>
