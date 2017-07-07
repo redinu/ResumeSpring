@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html     xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:th="http://www.thymeleaf.org"
+         xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Job Post</title>
+    <th:block th:replace="base :: head"></th:block>
+</head>
+<body>
+<th:block th:replace="base :: nav"></th:block>
+	<div class="jumbotron">
+		<div class="container">
+		    <br /><br /><br />
+		    <h4>New Job Post</h4>
+		    <form autocomplete="off" action="#" th:action="@{/jobpost}" th:object="${job}" method="post">
+		        <div class="form-group">
+		            <label for="title">Title <mark><strong><span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span></strong></mark></label>
+		            <input type="text" class="form-control" id="title" placeholder="Title" th:field="*{title}" />
+		        </div>
+		        <div class="form-group">
+		            <label for="employer">Employer <mark><strong><span th:if="${#fields.hasErrors('employer')}" th:errors="*{employer}">Employer Error</span></strong></mark></label>
+		            <input type="text" class="form-control" id="employer" placeholder="Employer" th:field="*{employer}" />
+		        </div>
+		        <div class="form-group">
+		            <label for="description">Job Description <mark><strong><span th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Job Description Error</span></strong></mark></label>
+		            <textarea type="text" class="form-control" id="description" th:field="*{description}" />
+		        </div>
+		        <div class="form-group">
+		            <label for="salary">Salary <mark><strong><span th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">Salary Error</span></strong></mark></label>
+		            <input type="text" class="form-control" id="salary" placeholder="Salary" th:field="*{salary}" />
+		        </div>
+		        <div th:if="${skillList==null}" class="form-group">
+		            <label for="skills">Skill <mark><strong><span th:if="${#fields.hasErrors('skills')}" th:errors="*{skills}">Skills Error</span></strong></mark></label>
+		            <input type="text" class="form-control" id="password" placeholder="skill" th:field="*{skills}" />
+		       	</div>
+		       	<div th:if="${skillList!=null}" class="form-group">
+					<label for="skills"><mark><strong><input type="hidden" th:field ="*{skills}"  th:value="${skillList}" /></strong></mark></label>
+							<span th:each="skill : ${skillList}"> 
+								<label for="skills">Skill 
+									<input type="text" th:value="${skill}" /> 
+								</label>
+							</span>
+							<label >Skill
+								<input type="text" name ="newSkill" />
+							</label>
+				</div>
+		        
+		        <label>Add another skill
+		        	<input type="checkbox" name= "addSkill" value="Add another Skill"  />
+		        </label>
+		        <button type="submit" class="btn btn-default">Submit</button>
+		    </form>
+	</div><!-- /.container -->
+	</div>
+<th:block th:replace="base :: footlinks"></th:block>
+</body>
+</html>

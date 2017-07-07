@@ -109,7 +109,7 @@ public class UserController {
 		Set<User> users = new HashSet<User>();
 		userValidator.validate(user, bindingResult);
 		if(bindingResult.hasErrors()){
-			if(role.equals("Job Seeker")){
+			if(role.equals("JobSeeker")){
 				return "jobseekerRegister";
 			}else{
 				return "recruiterRegister";
@@ -129,7 +129,7 @@ public class UserController {
 			return "redirect:/login";
 		}else{
 			model.addAttribute("errormessage", "Someone's already using that email. If that’s you, please sign in.");
-			if(role.equals("jobseeker")){
+			if(role.equalsIgnoreCase("jobseeker")){
 				return "jobseekerRegister";
 			}else{
 				return "recruiterRegister";
@@ -174,7 +174,7 @@ public class UserController {
 		model.addAttribute("searchString", s);
 		model.addAttribute("allPer", personList);
 		
-		return "companies";
+		return "userSearch";
 		
 	}
 	
@@ -193,7 +193,7 @@ public class UserController {
 		model.addAttribute("searchString", s);
 		model.addAttribute("allPer", personList);
 		
-		return "schools";
+		return "userSearch";
 		
 	}
 	
@@ -213,7 +213,7 @@ public class UserController {
 		model.addAttribute("searchString", s);
 		model.addAttribute("allPer", personList);
 		
-		return "skill";
+		return "userSearch";
 		
 	}
 	public UserValidator getUserValidator() {

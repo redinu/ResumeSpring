@@ -15,7 +15,7 @@ public class Skills implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private int skillId;
 	@NotNull
-	@Size(min=2, max=10)
+	@Size(min=2, max=20)
 	private String skill;
 	@NotNull
 	private int proficiency;

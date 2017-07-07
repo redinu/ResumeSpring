@@ -26,9 +26,14 @@ import com.resume.repositories.EducationRepository;
 import com.resume.repositories.ExperienceRepository;
 import com.resume.repositories.PersonRepository;
 import com.resume.repositories.SkillsRepository;
+import com.resume.repositories.UserRepository;
 
 @Controller
 public class PersonController {
+	
+	@Autowired
+	UserRepository userRepository;
+	
 	@Autowired
 	PersonRepository personRepository;
 	@Autowired
@@ -39,9 +44,13 @@ public class PersonController {
 	SkillsRepository skillsRepository; 
 	
 	@GetMapping("/addResume")
-	public String getForm(Model model){
+	public String getForm(Principal principal, Model model){
 		
+		User user = userRepository.findByUsername(principal.getName());
 		Person person = new Person();
+		person.setFirstName(user.getFirstName());
+		person.setLastName(user.getLastName());
+		person.setEmail(user.getEmail());
 		model.addAttribute("person", person);
 		return "personForm";
 	}
@@ -62,7 +71,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(path= "/resume/{personId}")
-	public String displayResume( @PathVariable("personId") Long personId, Model model){
+	public String displayResume( @PathVariable("personId") Long personId, Principal principal,Model model){
 		
 		Person p = personRepository.findOne(personId);
 		

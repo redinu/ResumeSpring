@@ -8,8 +8,8 @@
 	</head>
 	<body>	
 		<nav th:replace=" base :: nav"></nav>
-		<div class="container">
-			<div>
+		<div class="jumbotron">
+	  		<div class="container">
 				<form  action="#" th:action="@{/education/save}"  method="post" th:object="${education}">
 					Degree obtained: 
 					<input type="text" th:field ="*{typeOfDegree}"  /> 
@@ -27,7 +27,6 @@
 				</form>
 			</div>
 		</div>
-		
 		
 	</body>
 </html>

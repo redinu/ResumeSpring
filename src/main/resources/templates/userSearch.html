@@ -7,8 +7,12 @@
 	</head>
 	<body>
 		<nav th:replace=" base :: nav"></nav>
-		<ul th:each="per : ${allPer}">
-			<li><a th:href = "@{'/resume/' + ${per.personId}}"  th:text="${per.firstName} + ' ' + ${per.lastName}"/></li>
-		</ul>
+		<div class="jumbotron">
+			<div class="container">
+				<ul th:each="per : ${allPer}">
+					<li><a th:href = "@{'/resume/' + ${per.personId}}"  th:text="${per.firstName} + ' ' + ${per.lastName}"/></li>
+				</ul>
+			</div>
+		</div>
 	</body>
 </html>

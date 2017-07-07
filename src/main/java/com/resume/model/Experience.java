@@ -20,11 +20,8 @@ public class Experience implements Serializable{
 	private String title; 
 	private String company;
 	
-	
-//	@Convert(converter = LocalDateTimeConverter.class)
 	private String sDate;
 	
-//	@Convert(converter = LocalDateTimeConverter.class)
 	private String eDate;
 	
 	private ArrayList <String> duties;

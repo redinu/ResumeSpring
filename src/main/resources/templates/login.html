@@ -8,22 +8,23 @@
 	</head>
 	<body>
 		<nav th:replace=" base :: nav"></nav>
-		<div class="container">
-			<div th:if="${param.error}">
-				Invalid email and password.
+		<div class="jumbotron">
+			<div class="container">
+				<div th:if="${param.error}">
+					Invalid email and password.
+				</div>
+				<div th:if="${param.logout}">
+					You have been logged out.
+				</div>
+				<div>
+				<p th:if="${errormessage!=null}" th:text="${errormessage}"></p> 
+				</div>
+				<form th:action="@{/login}" method="post">
+					<lable> User name : <input type="text"  name="username" /> </lable>
+					<lable> Password: <input type="password" name="password"  /> </lable>
+					<div><input type="submit" value="Sign in"/></div>
+				</form>
 			</div>
-			<div th:if="${param.logout}">
-				You have been logged out.
-			</div>
-			<div>
-			<p th:if="${errormessage!=null}" th:text="${errormessage}"></p> 
-			</div>
-			<form th:action="@{/login}" method="post">
-				<lable> Email: <input type="text"  name="username" /> </lable>
-				<lable> Password: <input type="password" name="password"  /> </lable>
-				<div><input type="submit" value="Sign in"/></div>
-			</form>
-			<a th:href="@{/register}" >Create an account</a>
 		</div>
 	</body>
 </html>

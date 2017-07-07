@@ -34,8 +34,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login")
                 .permitAll()
                 .and().authorizeRequests()
-				.antMatchers("/", "/addResume", "/resume/**","/logout",
-						"/search/**", "/education/**", "/experience/**","/skill/**")
+				.antMatchers("/", "/addResume","/jobpost", "/resume/**","/logout",
+						"/search/**", "/education/**", "/experience/**","/skill/**", "/job/**")
 				.authenticated();
     }
 

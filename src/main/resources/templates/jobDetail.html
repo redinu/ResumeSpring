@@ -9,17 +9,13 @@
 		<nav th:replace=" base :: nav"></nav>
 		<div class="jumbotron">
 	  		<div class="container">
-				<div th:each="education: ${eduList}">
-				<p th:text="${education.typeOfDegree}"></p>
-				<p th:text="${education.institute}"></p>
-				<p th:text="${education.endYear}"></p>
-				</div>
-				<div th:if="${eduList!=null}">
-					<a th:href="@{'/education/add/'+ ${personId}}">add education</a>
-					<a th:href="@{'/experience/add/'+ ${personId}}">next</a>
-				</div>
+				<strong><p th:text="'Title:' + ${job.title}"></p></strong>
+				<p >Company: <span th:text="${job.employer}"/></p>
+				<p >Description: <span th:text="${job.description}"/></p>
+				<p >Salary: <span th:text="${job.salary}"/></p>
+				<p >Posted Date: <span th:text="${job.postedDate}"/></p>
+				<div></div>
 			</div>
 		</div>
-		
 	</body>
 </html>

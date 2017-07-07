@@ -7,15 +7,17 @@
 	</head>
 	<body>
 		<nav th:replace=" base :: nav"></nav>
-		<div class="container">
-			<div th:each="skill: ${skList}">
-				<p th:text="${skill.skill}"></p>
-				<p th:text="${skill.proficiency}"></p>
+		<div class="jumbotron">
+			<div class="container">
+				<div th:each="skill: ${skList}">
+					<p th:text="${skill.skill}"></p>
+					<p th:text="${skill.proficiency}"></p>
+				</div>
+				<div th:if="${skList!=null}">
+					<a th:href="@{'/skill/add/' + ${personId}}">Add skill</a>
+					<a th:href="@{'/resume/' + ${personId}}">Done</a>
+				</div>	
 			</div>
-			<div th:if="${skList!=null}">
-				<a th:href="@{'/skill/add/' + ${personId}}">Add skill</a>
-				<a th:href="@{'/resume/' + ${personId}}">Done</a>
-			</div>	
 		</div>		
 	</body>
 </html>

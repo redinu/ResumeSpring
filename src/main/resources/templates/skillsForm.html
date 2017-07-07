@@ -7,19 +7,21 @@
 	</head>
 	<body>
 		<nav th:replace=" base :: nav"></nav>
-		<div class="container">
-			<form  action ="#"  th:action="@{/skill/save}" th:object="${skill}" method = "post">
-				<p> Skill: 
-					<input type="text"  th:field="*{skill}" /> 
-					<span th:if="${#fields.hasErrors('skill')}" th:errors="*{skill}"></span>
-				</p>
-				<p> Proficiency:
-					 <input type="text" th:field="*{proficiency}"  /> 
-				 	 <span th:if="${#fields.hasErrors('proficiency')}" th:errors="*{proficiency}"></span>
-				</p>
-				<input type="hidden" name ="personId" th:value="${personId}"  /> 
-				<input type="submit" value="submit"  />
-			</form>
+		<div class="jumbotron">
+			<div class="container">
+				<form  action ="#"  th:action="@{/skill/save}" th:object="${skill}" method = "post">
+					<p> Skill: 
+						<input type="text"  th:field="*{skill}" /> 
+						<span th:if="${#fields.hasErrors('skill')}" th:errors="*{skill}"></span>
+					</p>
+					<p> Proficiency:
+						 <input type="text" th:field="*{proficiency}"  /> 
+					 	 <span th:if="${#fields.hasErrors('proficiency')}" th:errors="*{proficiency}"></span>
+					</p>
+					<input type="hidden" name ="personId" th:value="${personId}"  /> 
+					<input type="submit" value="submit"  />
+				</form>
+			</div>
 		</div>
 	</body>
 </html>
